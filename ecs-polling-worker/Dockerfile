@@ -12,6 +12,7 @@ RUN apt-get update && \
         sudo \
         gpg \
         unzip \
+        wget \
         && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -28,6 +29,12 @@ RUN curl https://apt.octopus.com/public.key | gpg --dearmor --yes -o /usr/share/
     echo "deb [signed-by=/usr/share/keyrings/octopus.gpg] https://apt.octopus.com/ stretch main" | tee /etc/apt/sources.list.d/octopus.list && \
     apt-get update && apt-get install tentacle -y && \
     ln -s /opt/octopus/tentacle/Tentacle /usr/bin/tentacle
+
+# Powershell
+# https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.4
+RUN wget https://github.com/PowerShell/PowerShell/releases/download/v7.4.5/powershell_7.4.5-1.deb_amd64.deb&& \
+    dpkg -i powershell_7.4.5-1.deb_amd64.deb && \
+    apt-get install -f && rm powershell_7.4.5-1.deb_amd64.deb
 
 # Get AWS CLI
 # https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html#install-linux-awscli
